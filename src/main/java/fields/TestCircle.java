@@ -41,9 +41,30 @@ public class TestCircle {
         }
     }
 
+    private void testNegativeRadius() {
+        Circle circle = new Circle(-1);
+        if (compareDouble(circle.getRadius(), 0)) {
+            System.out.println("testNegativeRadius: OK");
+        } else {
+            System.out.println("testNegativeRadius: FAILURE");
+        }
+    }
+
+    private void testSetNegativeRadius() {
+        Circle circle = new Circle(5);
+        circle.setRadius(-100);
+        if (compareDouble(circle.getRadius(), 5)) {
+            System.out.println("testSetNegativeRadius: OK");
+        } else {
+            System.out.println("testSetNegativeRadius: FAILURE");
+        }
+    }
+
     public void test() {
         testCreateCircle();
         testSetRadius();
         testGetArea();
+        testNegativeRadius();
+        testSetNegativeRadius();
     }
 }
