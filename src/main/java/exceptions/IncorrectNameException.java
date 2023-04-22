@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class IncorrectNameException extends RuntimeException {
     public IncorrectNameException() {

@@ -11,7 +11,6 @@ public class Main {
                 new Auto("rx270", 1800, AutoType.SUV, new IceEngine(EngineType.TWO_MZ), 10300),
                 new Auto("wish", 1550, AutoType.WAGON, new IceEngine(EngineType.ONE_ZZ), 55600.2),
                 new Auto("tesla", 1700, AutoType.SEDAN, new ElectricalEngine(EngineType.ELECTRICAL), 89000)
-
         };
 
         for (Driveable car : arrayOfCars) {

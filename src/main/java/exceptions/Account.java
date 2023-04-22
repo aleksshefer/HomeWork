@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class Account {
     private final String name;
