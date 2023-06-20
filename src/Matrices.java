@@ -1,10 +1,6 @@
 import java.util.Arrays;
 
 public class Matrices {
-    static <T> T todo() {
-        throw new UnsupportedOperationException("Метод не реализован");
-    }
-
     /**
      * Вектор длины n
      */
@@ -33,7 +29,14 @@ public class Matrices {
          * @return новый вектор, представляющий сумму данного и другого векторов
          */
         public Vector add(Vector other) {
-            return todo();
+            if (this.items.length != other.items.length) {
+                throw new UnsupportedOperationException("Vector lengths do not match: this length = " + this.items.length + ", other length = " + other.items.length);
+            }
+            int[] items = new int[this.items.length];
+            for (int i = 0; i < items.length; i++) {
+                items[i] = this.items[i] + other.items[i];
+            }
+            return new Vector(items);
         }
 
         /**
@@ -44,7 +47,14 @@ public class Matrices {
          * @return новый вектор, представляющий разность данного и другого векторов
          */
         public Vector subtract(Vector other) {
-            return todo();
+            if (this.items.length != other.items.length) {
+                throw new UnsupportedOperationException("Vector lengths do not match: this length = " + this.items.length + ", other length = " + other.items.length);
+            }
+            int[] items = new int[this.items.length];
+            for (int i = 0; i < items.length; i++) {
+                items[i] = this.items[i] - other.items[i];
+            }
+            return new Vector(items);
         }
 
         /**
@@ -55,7 +65,15 @@ public class Matrices {
          * @return скалярное произведение данного и другого векторов
          */
         public int dotProduct(Vector other) {
-            return todo();
+            if (this.items.length != other.items.length) {
+                throw new UnsupportedOperationException("Vector lengths do not match: this length = " + this.items.length + ", other length = " + other.items.length);
+            }
+            int result = 0;
+            for (int i = 0; i < this.items.length; i++) {
+                result += this.items[i] * other.items[i];
+            }
+
+            return result;
         }
 
         /**
@@ -65,14 +83,22 @@ public class Matrices {
          * @return новый вектор, представляющий результат умножения данного вектора на скаляр
          */
         public Vector scalarMultiply(int scalar) {
-            return todo();
+            int[] items = this.items;
+            for (int i = 0; i < items.length; i++) {
+                items[i] = items[i] * scalar;
+            }
+            return new Vector(items);
         }
 
         /**
          * Вычисляет длину (норму) данного вектора.
          */
         public double length() {
-            return todo();
+            int sum = 0;
+            for (int item : this.items) {
+                sum += item * item;
+            }
+            return sum * 0.5;
         }
 
         @Override
@@ -137,7 +163,17 @@ public class Matrices {
          * @return новая матрица, являющаяся результатом сложения
          */
         public Matrix add(Matrix other) {
-            return todo();
+            if (this.nCols != other.nCols || this.nRows != other.nRows) {
+                throw new UnsupportedOperationException("Matrix sizes do not match");
+            }
+            Matrix matrix = new Matrix(nRows, nCols);
+
+            for (int iRow = 0; iRow < this.nRows; iRow++) {
+                for (int iCol = 0; iCol < this.nCols; iCol++) {
+                    matrix.rows[iRow][iCol] = this.rows[iRow][iCol] + other.rows[iRow][iCol];
+                }
+            }
+            return matrix;
         }
 
         /**
@@ -148,7 +184,17 @@ public class Matrices {
          * @return новая матрица, являющаяся результатом вычитания
          */
         public Matrix subtract(Matrix other) {
-            return todo();
+            if (this.nCols != other.nCols || this.nRows != other.nRows) {
+                throw new UnsupportedOperationException("Matrix sizes do not match");
+            }
+            Matrix matrix = new Matrix(this.nRows, this.nCols);
+
+            for (int iRow = 0; iRow < this.nRows; iRow++) {
+                for (int iCol = 0; iCol < this.nCols; iCol++) {
+                    matrix.rows[iRow][iCol] = this.rows[iRow][iCol] - other.rows[iRow][iCol];
+                }
+            }
+            return matrix;
         }
 
         /**
@@ -159,7 +205,22 @@ public class Matrices {
          * @return новая матрица, являющаяся результатом умножения
          */
         public Matrix multiply(Matrix other) {
-            return todo();
+            if (this.nCols != other.nRows) {
+                throw new UnsupportedOperationException("Matrix sizes do not match");
+            }
+            Matrix matrix = new Matrix(this.nRows, other.nCols);
+            int result;
+
+            for (int iRow = 0; iRow < matrix.nRows; iRow++) {
+
+                for (int iCol = 0; iCol < matrix.nCols; iCol++) {
+                    result = 0;
+                    for (int i = 0; i < this.nRows; i++) result += this.rows[iRow][i] * other.rows[i][iCol];
+
+                    matrix.rows[iRow][iCol] = result;
+                }
+            }
+            return matrix;
         }
 
         /**
@@ -169,7 +230,14 @@ public class Matrices {
          * @return новая матрица, являющаяся результатом умножения на скаляр
          */
         public Matrix scalarMultiply(int scalar) {
-            return todo();
+            Matrix matrix = new Matrix(this.nRows, this.nCols);
+
+            for (int iRow = 0; iRow < this.nRows; iRow++) {
+                for (int iCol = 0; iCol < this.nCols; iCol++) {
+                    matrix.rows[iRow][iCol] = this.rows[iRow][iCol] * scalar;
+                }
+            }
+            return matrix;
         }
 
         /**
@@ -178,7 +246,14 @@ public class Matrices {
          * @return новая матрица, являющаяся транспонированной версией текущей матрицы
          */
         public Matrix transpose() {
-            return todo();
+            Matrix matrix = new Matrix(this.nCols, this.nRows);
+
+            for (int iRow = 0; iRow < matrix.nRows; iRow++) {
+                for (int iCol = 0; iCol < matrix.nCols; iCol++) {
+                    matrix.rows[iRow][iCol] = this.rows[iCol][iRow];
+                }
+            }
+            return matrix;
         }
 
         /**
@@ -187,7 +262,7 @@ public class Matrices {
          * @return значение определителя матрицы
          */
         public int determinant() {
-            return todo();
+            return determinant(this.rows);
         }
 
         /**
@@ -205,7 +280,7 @@ public class Matrices {
 
             // Базовый случай для матрицы 2x2
             if (matrix.length == 2) {
-                return todo();
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
             }
 
             int result = 0;
@@ -213,7 +288,18 @@ public class Matrices {
             for (int i = 0; i < matrix.length; i++) {
                 // Создание матрицы для поддетерминанта
                 int[][] smallerMatrix = new int[matrix.length - 1][matrix.length - 1];
-                todo(); // Заполнение smallerMatrix нужными значениями из matrix
+                // Заполнение smallerMatrix нужными значениями из matrix
+                int parentRow = 1;
+                int parentCol;
+                for (int iRow = 0; iRow < smallerMatrix.length; iRow++) {
+                    parentCol = 0;
+                    for (int iCol = 0; iCol < smallerMatrix.length; iCol++) {
+                        if (parentCol == i) parentCol++;
+                        smallerMatrix[iRow][iCol] = matrix[parentRow][parentCol];
+                        parentCol++;
+                    }
+                    parentRow++;
+                }
 
                 // Вычисление поддетерминанта рекурсивным вызовом
                 int subDeterminant = determinant(smallerMatrix);
@@ -268,14 +354,14 @@ public class Matrices {
         A.rows[0] = new int[]{1, 2};
         A.rows[1] = new int[]{3, 4};
         System.out.println("Matrix A:");
-        System.out.println(A.toString());
+        System.out.println(A);
 
         // Создание матрицы B 2x2
         Matrix B = new Matrix(2, 2);
         B.rows[0] = new int[]{2, 0};
         B.rows[1] = new int[]{1, 2};
         System.out.println("Matrix B:");
-        System.out.println(B.toString());
+        System.out.println(B);
 
         // Сложение матриц A и B
         Matrix C = A.add(B);
@@ -309,12 +395,11 @@ public class Matrices {
         H.rows[1] = new int[]{1, 3, 1};
         H.rows[2] = new int[]{2, 1, 4};
         System.out.println("Matrix H:");
-        System.out.println(H.toString());
+        System.out.println(H);
 
         // Вычисление определителя матрицы H
         int det = H.determinant();
         System.out.println("Determinant of Matrix H:");
         System.out.println(det);
-
     }
 }
